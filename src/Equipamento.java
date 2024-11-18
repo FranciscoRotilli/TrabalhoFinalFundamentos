@@ -5,4 +5,8 @@ public class Equipamento {
     private int quantidade;
     private double valor;
     private boolean seguro;
+
+    public Equipamento() {
+
+    }
 }
