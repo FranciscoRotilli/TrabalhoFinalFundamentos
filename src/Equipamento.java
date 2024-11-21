@@ -80,4 +80,19 @@ public class Equipamento {
                 "\nSeguro: " + (seguro ? "Sim" : "Não") +
                 "\nStatus de Aluguel: " + (statusAluguel ? "Alugado" : "Disponível");
     }
+    public boolean retiraEquipamento() {
+        if (!this.statusAluguel){
+            this.statusAluguel = true;
+            return true;
+        }
+        return false;
+    }
+    public boolean devolveEquipamento() {
+        if (this.statusAluguel){
+            this.statusAluguel = false;
+            return true;
+        }
+        return false;
+    }
+
 }
