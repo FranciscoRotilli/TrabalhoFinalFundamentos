@@ -40,10 +40,8 @@ public class Equipamento {
     public double getValor() {
         return valor;
     }
-    public boolean getSeguro() {
-        return seguro;
-    }
-    pubic boolean getStatusAluguel() {
+    public boolean getSeguro() { return seguro; }
+    public boolean getStatusAluguel() {
         return statusAluguel;
     }
 
