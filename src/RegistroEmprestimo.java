@@ -24,12 +24,24 @@ public class RegistroEmprestimo {
         }
         return false;
     }
-    public Emprestimo[] buscaEmprestimosPeloNomeCliente(String nome) {
+    public Emprestimo[] buscaEmprestimosPeloNomeResponsavel(String nome) {
         Emprestimo[] resultado;
         resultado = new Emprestimo[lista.length];
         int index = 0;
         for (int i = 0; i < this.index; i++) {
-            if (lista[i].getCliente().getNome().equals(nome)) {
+            if (lista[i].getCliente().getResponsavel().equals(nome)) {
+                resultado[index] = lista[i];
+                index++;
+            }
+        }
+        return resultado;
+    }
+    public Emprestimo[] buscaEmprestimosPeloNomeEmpresa(String nome) {
+        Emprestimo[] resultado;
+        resultado = new Emprestimo[lista.length];
+        int index = 0;
+        for (int i = 0; i < this.index; i++) {
+            if (lista[i].getCliente().getEmpresa().equals(nome)) {
                 resultado[index] = lista[i];
                 index++;
             }

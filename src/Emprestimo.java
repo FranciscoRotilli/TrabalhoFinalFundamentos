@@ -16,7 +16,7 @@ public class Emprestimo {
         qtdHoras = 0;
     }
     public Emprestimo(Equipamento equ, Cliente cliente, int qtdHoras, boolean seguro) {
-        this.codigoEmprestimo = UUID.randomUUID().toString();
+        this.codigoEmprestimo = UUID.randomUUID().toString().substring(32, 36);
         if (equ != null) {
             this.equipamento = equ;
             equ.setStatusAluguel(true);

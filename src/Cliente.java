@@ -1,30 +1,32 @@
+import java.util.UUID;
+
 public class Cliente {
-    private int matricula;
-    private String nome;
+    private String matricula;
+    private String responsavel;
     private String empresa;
     private Equipamento equipamento;
 
-    public Cliente(int matricula, String nome, String empresa, Equipamento equipamento) {
-        this.matricula = matricula;
-        this.nome = nome;
+    public Cliente(String responsavel, String empresa, Equipamento equipamento) {
+        this.matricula = UUID.randomUUID().toString().substring(32, 36);
+        this.responsavel = responsavel;
         this.empresa = empresa;
         this.equipamento = equipamento;
     }
 
-    public int getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
-        this.matricula = matricula;
+    public void setMatricula() {
+        if (this.matricula.isEmpty()) this.matricula = UUID.randomUUID().toString().substring(32, 36);
     }
 
-    public String getNome() {
-        return nome;
+    public String getResponsavel() {
+        return responsavel;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.responsavel = nome;
     }
 
     public String getEmpresa() {
@@ -45,6 +47,6 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Matrícula: " + matricula + ", Nome: " + nome + ", Empresa: " + empresa + ", Equipamento: " + equipamento;
+        return "Matrícula: " + matricula + ", Nome: " + responsavel + ", Empresa: " + empresa + ", Equipamento: " + equipamento;
     }
 }

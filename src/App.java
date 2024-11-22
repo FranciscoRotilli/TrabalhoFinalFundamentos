@@ -51,7 +51,7 @@ public class App {
             System.out.println("Equipamento adicionado com sucesso!");
             return true;
         } else {
-            System.out.println("Erro ao adicionar equipamento, tente novamente.");
+            System.out.println("Erro ao adicionar equipamento, lista cheia.");
             return false;
         }
     }
