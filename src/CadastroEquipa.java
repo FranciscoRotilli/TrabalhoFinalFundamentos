@@ -28,12 +28,14 @@ public class CadastroEquipa {
         }
         return null;
     }
-    public int totalEquipamentos() {
-        int total = 0;
+    public Equipamento buscaEquipaCodigo(String codigo) {
         for (int i = 0; i < index; i++) {
-            total += lista[i].getQuantidade();
+            if (codigo.equals(lista[i].getCodigo())) return lista[i];
         }
-        return total;
+        return null;
+    }
+    public int totalEquipamentos() {
+        return index;
     }
     public String mostraEquipamentos() {
         String aux = "\n";

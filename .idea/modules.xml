@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Less-is-More.iml" filepath="$PROJECT_DIR$/.idea/Less-is-More.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LessIsMore.iml" filepath="$PROJECT_DIR$/LessIsMore.iml" />
     </modules>
   </component>
 </project>
