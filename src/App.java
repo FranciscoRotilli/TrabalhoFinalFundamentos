@@ -1,16 +1,35 @@
 import java.util.Scanner;
 public class App {
-    CadastroEquipa listaEquipa = new CadastroEquipa();
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+        CadastroEquipa listaEquipa = new CadastroEquipa();
         int opcao;
+        String nomeEquipa;
         do {
             menu();
             System.out.println("Digite a opção desejada ");
             opcao = in.nextInt();
             switch (opcao) {
                 case 4:
-
+                    if (incluiEquipamento(listaEquipa)) System.out.println("Equipamento cadastrado com sucesso!");
+                    else System.out.println("Erro ao cadastrar equipamento!");
+                break;
+                case 5: mostraEquipamentos(listaEquipa);
+                break;
+                case 6:
+                    System.out.println("Digite o nome do equipamento: ");
+                    nomeEquipa = in.nextLine();
+                    System.out.println(pesquisarEquipamentoPorNome(listaEquipa, nomeEquipa));
+                break;
+                case 7:
+                    retirarEquipamento(listaEquipa);
+                break;
+                case 8:
+                    devolverEquipamento(listaEquipa);
+                break;
+                case 9:
+                    quantidadeTotalEquipamentos(listaEquipa);
+                break;
             }
         } while (opcao != 11);
     }
@@ -32,7 +51,7 @@ public class App {
         System.out.println("2 – Consultar saldo pendente");
         System.out.println("3 – Voltar para o menu principal");
     }
-    public boolean incluiEquipamento() {
+    public static boolean incluiEquipamento(CadastroEquipa listaEquipa) {
         Scanner in = new Scanner(System.in);
         String nome;
         String tipo;
@@ -55,16 +74,18 @@ public class App {
             return false;
         }
     }
-    public void mostraEquipamentos() {
+    public static void mostraEquipamentos(CadastroEquipa listaEquipa) {
         System.out.println("Equipamentos cadastrados: \n");
         System.out.println(listaEquipa.mostraEquipamentos());
     }
-    public void pesquisarEquipamentoPorNome(String nome) {
+    public static String pesquisarEquipamentoPorNome(CadastroEquipa listaEquipa, String nome) {
         Equipamento e = listaEquipa.buscaEquipaPeloNome(nome);
-        System.out.println("Equipamento encontrado com sucesso!");
-        System.out.println(e.toString());
+        if (e != null) {
+            return e.toString();
+        }
+        return "Equipamento não encontrado";
     }
-    public void retirarEquipamento() {
+    public static void retirarEquipamento(CadastroEquipa listaEquipa) {
         Scanner in = new Scanner(System.in);
         String codigo;
         int opcao;
@@ -94,7 +115,7 @@ public class App {
         } else System.out.println("ERRO! Equipamento não encontrado.");
 
     }
-    public void devolverEquipamento() {
+    public static void devolverEquipamento(CadastroEquipa listaEquipa) {
         Scanner in = new Scanner(System.in);
         String codigo;
         int opcao;
@@ -106,7 +127,7 @@ public class App {
             else System.out.println("ERRO! Equipamento não está alugado.");
         } else System.out.println("ERRO! Equipamento não encontrado.");
     }
-    public void quantidadeTotalEquipamentos() {
+    public static void quantidadeTotalEquipamentos(CadastroEquipa listaEquipa) {
         System.out.println("Existem " + listaEquipa.totalEquipamentos() + " equipamentos cadastrados.");
     }
 
