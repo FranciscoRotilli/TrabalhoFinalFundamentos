@@ -4,12 +4,31 @@ public class App {
         Scanner in = new Scanner(System.in);
         CadastroEquipa listaEquipa = new CadastroEquipa();
         int opcao;
-        String nomeEquipa;
+        String nomeEquipa, nomeCliente;
         do {
             menu();
             System.out.println("Digite a opção desejada ");
             opcao = in.nextInt();
             switch (opcao) {
+                case 99:
+                    Equipamento a = new Equipamento("Vega Laser Ibramed Aparelho de Laser de Alta Potência para Depilação", "Laser para Depilação", 259.89);
+                    listaEquipa.adicionaEquipa(a);
+                    Equipamento b = new Equipamento("Alfamed Eletrocardiógrafo 12 Canais Ritmus 600", "Eletrocardiógrafo", 51.66);
+                    listaEquipa.adicionaEquipa(b);
+                    Equipamento c = new Equipamento("Alfamed Ultrassom Portátil Invictus C5 Plus", "Ultrassom", 251.16);
+                    listaEquipa.adicionaEquipa(c);
+                    Equipamento d = new Equipamento("Criodermis Aparelho De Criolipólise de Placas da Medical San", "Criolipólise", 171.19);
+                    listaEquipa.adicionaEquipa(d);
+                    Equipamento e = new Equipamento("BeautiFill Sculpting Perfection", "Lipoaspiração", 396.19);
+                    listaEquipa.adicionaEquipa(e);
+                    Equipamento f = new Equipamento("Canfield Scientific HairMetrix", "Imagem", 86.19);
+                    listaEquipa.adicionaEquipa(f);
+                    System.out.println("Modo demo ativado!");
+                    break;
+                case 3:
+                    System.out.println("Digite o nome do Cliente: ");
+                    nomeCliente = in.nextLine();
+                    nomeCliente = in.nextLine();
                 case 4:
                     if (incluiEquipamento(listaEquipa)) System.out.println("Equipamento cadastrado com sucesso!");
                     else System.out.println("Erro ao cadastrar equipamento!");
@@ -19,13 +38,14 @@ public class App {
                 case 6:
                     System.out.println("Digite o nome do equipamento: ");
                     nomeEquipa = in.nextLine();
+                    nomeEquipa = in.nextLine();
                     System.out.println(pesquisarEquipamentoPorNome(listaEquipa, nomeEquipa));
                 break;
                 case 7:
-                    retirarEquipamento(listaEquipa);
+                    //retirarEquipamento(listaEquipa);
                 break;
                 case 8:
-                    devolverEquipamento(listaEquipa);
+                    //devolverEquipamento(listaEquipa);
                 break;
                 case 9:
                     quantidadeTotalEquipamentos(listaEquipa);
@@ -34,6 +54,7 @@ public class App {
         } while (opcao != 11);
     }
     public static void menu(){
+        System.out.println("99 – Modo demo (3 clientes e 6 equipamentos pré-cadastrados)");
         System.out.println("1 – Incluir Cliente");
         System.out.println("2 – Mostrar clientes cadastrados");
         System.out.println("3 – Pesquisar cliente por nome");
@@ -61,18 +82,11 @@ public class App {
         nome = in.nextLine();
         System.out.println("Digite o tipo do equipamento: ");
         tipo = in.nextLine();
-        System.out.println("Digite o quantidade do equipamento: ");
-        quantidade = in.nextInt();
         System.out.println("Digite o valor do equipamento: ");
         valor = in.nextDouble();
-        Equipamento e = new Equipamento(nome, tipo, quantidade, valor);
-        if (listaEquipa.adicionaEquipa(e)) {
-            System.out.println("Equipamento adicionado com sucesso!");
-            return true;
-        } else {
-            System.out.println("Erro ao adicionar equipamento, lista cheia.");
-            return false;
-        }
+        Equipamento e = new Equipamento(nome, tipo, valor);
+        return listaEquipa.adicionaEquipa(e);
+
     }
     public static void mostraEquipamentos(CadastroEquipa listaEquipa) {
         System.out.println("Equipamentos cadastrados: \n");
@@ -85,48 +99,48 @@ public class App {
         }
         return "Equipamento não encontrado";
     }
-    public static void retirarEquipamento(CadastroEquipa listaEquipa) {
-        Scanner in = new Scanner(System.in);
-        String codigo;
-        int opcao;
-        String cliente;
-        System.out.println("Digite o código do equipamento desejado: ");
-        codigo = in.nextLine();
-        Equipamento e = listaEquipa.buscaEquipaCodigo(codigo);
-        if (e != null) {
-            System.out.println("Equipamento encontrado!");
-            System.out.println(e.toString());
-            if (!e.getStatusAluguel()) {
-                System.out.println("Deseja retirar o equipamento?");
-                System.out.println("1 - Sim");
-                System.out.println("2 - Nao");
-                opcao = in.nextInt();
-                if (opcao == 1) {
-                    System.out.println("Digite o nome do cliente: ");
-                    cliente = in.nextLine();
-                    if (buscaClientePeloNome(cliente) != null) {
-                        System.out.println("Cliente encontrado!");
-                        if (e.retiraEquipamento()) System.out.println("Equipamento retirado com sucesso!");
-                        else System.out.println("ERRO! Cliente já possui um equipamento desse tipo alugado.");
-                    }
-                } else if (opcao == 2) System.out.println("Retirada cancelada.");
-                else System.out.println("ERRO! Opção inválida, tente novamente.");
-            } else System.out.println("Equipamento alugado no momento, não é possível realizar retirada.");
-        } else System.out.println("ERRO! Equipamento não encontrado.");
-
-    }
-    public static void devolverEquipamento(CadastroEquipa listaEquipa) {
-        Scanner in = new Scanner(System.in);
-        String codigo;
-        int opcao;
-        System.out.println("Digite o código do equipamento a ser devolvido: ");
-        codigo = in.next();
-        Equipamento e = listaEquipa.buscaEquipaCodigo(codigo);
-        if (e != null) {
-            if (e.devolveEquipamento()) System.out.println("Equipamento devolvido com sucesso!");
-            else System.out.println("ERRO! Equipamento não está alugado.");
-        } else System.out.println("ERRO! Equipamento não encontrado.");
-    }
+//    public static void retirarEquipamento(CadastroEquipa listaEquipa) {
+//        Scanner in = new Scanner(System.in);
+//        String codigo;
+//        int opcao;
+//        String cliente;
+//        System.out.println("Digite o código do equipamento desejado: ");
+//        codigo = in.nextLine();
+//        Equipamento e = listaEquipa.buscaEquipaCodigo(codigo);
+//        if (e != null) {
+//            System.out.println("Equipamento encontrado!");
+//            System.out.println(e.toString());
+//            if (!e.getStatusAluguel()) {
+//                System.out.println("Deseja retirar o equipamento?");
+//                System.out.println("1 - Sim");
+//                System.out.println("2 - Nao");
+//                opcao = in.nextInt();
+//                if (opcao == 1) {
+//                    System.out.println("Digite o nome do cliente: ");
+//                    cliente = in.nextLine();
+//                    if (buscaClientePeloNome(cliente) != null) {
+//                        System.out.println("Cliente encontrado!");
+//                        if (e.retiraEquipamento()) System.out.println("Equipamento retirado com sucesso!");
+//                        else System.out.println("ERRO! Cliente já possui um equipamento desse tipo alugado.");
+//                    }
+//                } else if (opcao == 2) System.out.println("Retirada cancelada.");
+//                else System.out.println("ERRO! Opção inválida, tente novamente.");
+//            } else System.out.println("Equipamento alugado no momento, não é possível realizar retirada.");
+//        } else System.out.println("ERRO! Equipamento não encontrado.");
+//
+//    }
+//    public static void devolverEquipamento(CadastroEquipa listaEquipa) {
+//        Scanner in = new Scanner(System.in);
+//        String codigo;
+//        int opcao;
+//        System.out.println("Digite o código do equipamento a ser devolvido: ");
+//        codigo = in.next();
+//        Equipamento e = listaEquipa.buscaEquipaCodigo(codigo);
+//        if (e != null) {
+//            if (e.devolveEquipamento()) System.out.println("Equipamento devolvido com sucesso!");
+//            else System.out.println("ERRO! Equipamento não está alugado.");
+//        } else System.out.println("ERRO! Equipamento não encontrado.");
+//    }
     public static void quantidadeTotalEquipamentos(CadastroEquipa listaEquipa) {
         System.out.println("Existem " + listaEquipa.totalEquipamentos() + " equipamentos cadastrados.");
     }

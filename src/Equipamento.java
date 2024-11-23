@@ -12,11 +12,11 @@ public class Equipamento {
         valor = 0.0;
         statusAluguel = false;
     }
-    public Equipamento(String nome, String tipo, int quantidade, double valor) {
+    public Equipamento(String nome, String tipo, double valor) {
         this.codigo = UUID.randomUUID().toString().substring(32, 36);
         if (nome != null && !nome.isEmpty()) this.nome = nome;
         if (tipo != null && !tipo.isEmpty()) this.tipo = tipo;
-        if (valor > 0) this.valor = 0;
+        if (valor > 0) this.valor = valor;
         this.statusAluguel = false;
     }
     //getters
