@@ -96,12 +96,12 @@ public class App {
 
                 case 12:
                     in.nextLine();
-                    System.out.println("Saldo disponível em caixa: " + consultarSaldoCaixa(listaEmprestimo));
+                    System.out.println("Saldo disponível em caixa: R$" + consultarSaldoCaixa(listaEmprestimo));
                 break;
 
                 case 13:
                     in.nextLine();
-                    System.out.println("Saldo pendente em empréstimos: " + consultarSaldoPendente(listaEmprestimo));
+                    System.out.println("Saldo pendente em empréstimos: R$" + consultarSaldoPendente(listaEmprestimo));
                 break;
                 case 0: System.out.println("Saindo... Até mais!");
                 break;
