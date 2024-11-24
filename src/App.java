@@ -5,6 +5,27 @@ public class App {
         CadastroEquipa listaEquipa = new CadastroEquipa();
         CadastroCliente listaCliente = new CadastroCliente();
         CadastroEmprestimo listaEmprestimo = new CadastroEmprestimo();
+        { //Pré-cadastro para testes
+            Equipamento a = new Equipamento("Vega Laser Ibramed Aparelho de Laser de Alta Potência para Depilação", "Laser para Depilação", 259.89);
+            listaEquipa.adicionaEquipa(a);
+            Equipamento b = new Equipamento("Alfamed Eletrocardiógrafo 12 Canais Ritmus 600", "Eletrocardiógrafo", 51.66);
+            listaEquipa.adicionaEquipa(b);
+            Equipamento c = new Equipamento("Alfamed Ultrassom Portátil Invictus C5 Plus", "Ultrassom", 251.16);
+            listaEquipa.adicionaEquipa(c);
+            Equipamento d = new Equipamento("Criodermis Aparelho De Criolipólise de Placas da Medical San", "Criolipólise", 171.19);
+            listaEquipa.adicionaEquipa(d);
+            Equipamento e = new Equipamento("BeautiFill Sculpting Perfection", "Lipoaspiração", 396.19);
+            listaEquipa.adicionaEquipa(e);
+            Equipamento f = new Equipamento("Canfield Scientific HairMetrix", "Imagem", 86.19);
+            listaEquipa.adicionaEquipa(f);
+
+            Cliente g = new Cliente("Francisco Coimbra Rotilli", "DermoClínica Clínica de Embelezamento");
+            listaCliente.adicionaCliente(g);
+            Cliente h = new Cliente("José Francisco Da Silva", "LipoDerma Clínica de Lipoaspiração");
+            listaCliente.adicionaCliente(h);
+            Cliente i = new Cliente("Filipe Pedrozo Lopes", "DepiLaser Clínica de depilação à laser");
+            listaCliente.adicionaCliente(i);
+        }
         int opcao;
         String nomeEquipa, nomeCliente;
         System.out.println("Olá, bem vindo ao sistema integrado da Less is More");
@@ -12,31 +33,6 @@ public class App {
             menu();
             opcao = in.nextInt();
             switch (opcao) {
-                case 99:
-                    in.nextLine();
-                    Equipamento a = new Equipamento("Vega Laser Ibramed Aparelho de Laser de Alta Potência para Depilação", "Laser para Depilação", 259.89);
-                    listaEquipa.adicionaEquipa(a);
-                    Equipamento b = new Equipamento("Alfamed Eletrocardiógrafo 12 Canais Ritmus 600", "Eletrocardiógrafo", 51.66);
-                    listaEquipa.adicionaEquipa(b);
-                    Equipamento c = new Equipamento("Alfamed Ultrassom Portátil Invictus C5 Plus", "Ultrassom", 251.16);
-                    listaEquipa.adicionaEquipa(c);
-                    Equipamento d = new Equipamento("Criodermis Aparelho De Criolipólise de Placas da Medical San", "Criolipólise", 171.19);
-                    listaEquipa.adicionaEquipa(d);
-                    Equipamento e = new Equipamento("BeautiFill Sculpting Perfection", "Lipoaspiração", 396.19);
-                    listaEquipa.adicionaEquipa(e);
-                    Equipamento f = new Equipamento("Canfield Scientific HairMetrix", "Imagem", 86.19);
-                    listaEquipa.adicionaEquipa(f);
-
-                    Cliente g = new Cliente("Francisco Coimbra Rotilli", "DermoClínica Clínica de Embelezamento");
-                    listaCliente.adicionaCliente(g);
-                    Cliente h = new Cliente("José Francisco Da Silva", "LipoDerma Clínica de Lipoaspiração");
-                    listaCliente.adicionaCliente(h);
-                    Cliente i = new Cliente("Filipe Pedrozo Lopes", "DepiLaser Clínica de depilação à laser");
-                    listaCliente.adicionaCliente(i);
-
-                    System.out.println("Modo demo ativado!");
-                break;
-
                 case 1:
                     in.nextLine();
                     if (incluiCliente(listaCliente)) System.out.println("Cliente cadastrado com sucesso!");
@@ -111,7 +107,6 @@ public class App {
     }
     public static void menu(){
         System.out.println("Digite a opção desejada: ");
-        System.out.println("99 – Modo demo (3 clientes e 6 equipamentos pré-cadastrados)");
         System.out.println("1 – Incluir Cliente");
         System.out.println("2 – Listar clientes cadastrados");
         System.out.println("3 – Pesquisar cliente por nome do responsável");
