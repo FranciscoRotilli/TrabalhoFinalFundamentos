@@ -181,7 +181,7 @@ public class App {
     public static void novoEmprestimo(CadastroEquipa listaEquipa, CadastroCliente listaCliente, CadastroEmprestimo listaEmprestimo) {
         Scanner in = new Scanner(System.in);
         String codigo;
-        int opcao, horas;
+        int opcao, horas, opcaoS;
         boolean seguro = false;
         String cliente;
         System.out.println("Digite o código do equipamento desejado: ");
@@ -200,15 +200,26 @@ public class App {
                     System.out.println("Digite a matricula do cliente: ");
                     cliente = in.next();
                     Cliente c = listaCliente.buscaClientePelaMatricula(cliente);
-                    if (c != null) {
+                    boolean jaPossui = false;
+                    for (int i = 0; i < listaEmprestimo.getIndex(); i++) {
+                        if (listaEmprestimo.getLista()[i].getCliente().equals(c)) {
+                            if (listaEmprestimo.getLista()[i].getEquipamento().getTipo().equals(e.getTipo())) System.out.println("O cliente já possui um equipamento desse tipo alugado");
+                            jaPossui = true;
+                            break;
+                        }
+                    }
+                    if (c != null && !jaPossui) {
                         System.out.println("Cliente encontrado!");
                         System.out.println("Digite a quantidade de horas do empréstimo: ");
                         horas = in.nextInt();
                         in.nextLine();
                         if (horas > 3) {
-                            System.out.println("Deseja contratar seguro? S/N");
-                            seguro = in.next().equals("S");
+                            System.out.println("Deseja contratar seguro?");
+                            System.out.println("1 - Sim");
+                            System.out.println("2 - Nao");
+                            opcaoS = in.nextInt();
                             in.nextLine();
+                            if (opcaoS == 1) seguro = true;
                             Emprestimo emp = new Emprestimo(e, c, horas, true);
                             if (listaEmprestimo.registraEmprestimo(emp)) System.out.println("Equipamento retirado com sucesso!");
                             else System.out.println("ERRO!");

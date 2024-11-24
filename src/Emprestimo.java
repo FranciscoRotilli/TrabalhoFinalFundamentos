@@ -43,6 +43,9 @@ public class Emprestimo {
                 this.qtdHoras = qtdHoras;
                 valorInicial = equ.getValor()*qtdHoras;
             } else System.out.println("Mínimo 3 horas.");
+            if (seguro) {
+                this.valorFinal = equ.getValor()*qtdHoras*1.02;
+            }
         }
     }
 
