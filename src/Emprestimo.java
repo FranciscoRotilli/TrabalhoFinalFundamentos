@@ -53,6 +53,8 @@ public class Emprestimo {
     public boolean getStatusEmprestimo() { return ativo; }
     public boolean getStatusSeguro() { return seguro; }
     public int getQtdHoras() { return qtdHoras; }
+    public double getValorInicial() { return valorInicial; }
+    public double getValorFinal() { return valorFinal; }
 
     //setters
     public void setCodigoEmprestimo() { if (this.codigoEmprestimo.isEmpty()) this.codigoEmprestimo = UUID.randomUUID().toString(); }

@@ -62,4 +62,6 @@ public class CadastroEmprestimo {
         }
         return resultado;
     }
+    public Emprestimo[] getLista() { return lista; }
+    public int getIndex() { return index; }
 }

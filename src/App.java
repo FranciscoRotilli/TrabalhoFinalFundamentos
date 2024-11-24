@@ -94,10 +94,14 @@ public class App {
                     buscarEmprestimoEmpresa(listaEmprestimo);
                 break;
 
-                case 12: //todo
+                case 12:
+                    in.nextLine();
+                    System.out.println("Saldo disponível em caixa: " + consultarSaldoCaixa(listaEmprestimo));
                 break;
 
-                case 13: //todo
+                case 13:
+                    in.nextLine();
+                    System.out.println("Saldo pendente em empréstimos: " + consultarSaldoPendente(listaEmprestimo));
                 break;
                 case 0: System.out.println("Saindo... Até mais!");
                 break;
@@ -260,5 +264,19 @@ public class App {
                 }
             }
         } else System.out.println("Empresa não encontrada ou sem empréstimos registrados.");
+    }
+    public static double consultarSaldoCaixa(CadastroEmprestimo listaEmprestimo) {
+        double saldo = 0.0;
+        for (int i = 0; i < listaEmprestimo.getIndex(); i++) {
+            if(!listaEmprestimo.getLista()[i].getStatusEmprestimo()) saldo += listaEmprestimo.getLista()[i].getValorFinal();
+        }
+        return saldo;
+    }
+    public static double consultarSaldoPendente(CadastroEmprestimo listaEmprestimo) {
+        double saldo = 0.0;
+        for (int i = 0; i < listaEmprestimo.getIndex(); i++) {
+            if(listaEmprestimo.getLista()[i].getStatusEmprestimo()) saldo += listaEmprestimo.getLista()[i].getValorInicial();
+        }
+        return saldo;
     }
 }
