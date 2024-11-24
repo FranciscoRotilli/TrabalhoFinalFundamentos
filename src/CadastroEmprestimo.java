@@ -58,7 +58,7 @@ public class CadastroEmprestimo {
     public String mostrarEmprestimos() {
         String resultado = "";
         for (int i = 0; i < index; i++) {
-            resultado += lista[i].toString() + "\n";
+            resultado += lista[i].toString() + "\n\n";
         }
         return resultado;
     }
