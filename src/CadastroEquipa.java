@@ -3,7 +3,7 @@ public class CadastroEquipa {
     private int index;
 
     public CadastroEquipa() {
-        lista = new Equipamento[10];
+        lista = new Equipamento[100];
         index = 0;
     }
     public boolean adicionaEquipa(Equipamento e) {
@@ -34,13 +34,18 @@ public class CadastroEquipa {
         }
         return null;
     }
-    public int totalEquipamentos() {
-        return index;
+    public int totalEquipamentosDisponiveis() {
+        int total = 0;
+        for (int i = 0; i < index; i++) {
+            if (!lista[i].getStatusAluguel()) total++;
+        }
+        return total;
     }
-    public String mostraEquipamentos() {
+    public int totalEquipamentos() { return index; }
+    public String mostrarEquipamentos() {
         String aux = "\n";
         for (int i = 0; i < index; i++) {
-            aux += "Equipamento ID #" + i + ": \n" + lista[i].toString() + "\n\n";
+            aux += lista[i].toString() + "\n\n";
         }
         return aux;
     }

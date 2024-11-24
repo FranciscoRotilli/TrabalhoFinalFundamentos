@@ -4,49 +4,55 @@ public class Cliente {
     private String matricula;
     private String responsavel;
     private String empresa;
-    private Equipamento equipamento;
+    private int qtdEquipamentos;
 
-    public Cliente(String responsavel, String empresa, Equipamento equipamento) {
+    //constructors
+    public Cliente() {
+        matricula = "";
+        responsavel = "";
+        empresa = "";
+        qtdEquipamentos = 0;
+    }
+    public Cliente(String responsavel, String empresa) {
         this.matricula = UUID.randomUUID().toString().substring(32, 36);
-        this.responsavel = responsavel;
-        this.empresa = empresa;
-        this.equipamento = equipamento;
+        if (responsavel != null) this.responsavel = responsavel;
+        if (empresa != null) this.empresa = empresa;
+        qtdEquipamentos = 0;
     }
 
+    //getters
     public String getMatricula() {
         return matricula;
     }
-
-    public void setMatricula() {
-        if (this.matricula.isEmpty()) this.matricula = UUID.randomUUID().toString().substring(32, 36);
-    }
-
     public String getResponsavel() {
         return responsavel;
     }
-
-    public void setNome(String nome) {
-        this.responsavel = nome;
-    }
-
     public String getEmpresa() {
         return empresa;
     }
+    public int getQtdEquipamentos() {
+        return qtdEquipamentos;
+    }
 
+    //setters
+    public void setMatricula() {
+        if (this.matricula.isEmpty()) this.matricula = UUID.randomUUID().toString().substring(32, 36);
+    }
+    public void setNome(String nome) {
+        this.responsavel = nome;
+    }
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
     }
+    public void setQtdEquipamentos(int qtdEquipamentos) { this.qtdEquipamentos = qtdEquipamentos; }
 
-    public Equipamento getEquipamento() {
-        return equipamento;
-    }
-
-    public void setEquipamento(Equipamento equipamento) {
-        this.equipamento = equipamento;
-    }
-
-    @Override
+    //toString
     public String toString() {
-        return "Matrícula: " + matricula + ", Nome: " + responsavel + ", Empresa: " + empresa + ", Equipamento: " + equipamento;
+        return "Matrícula: " + matricula +
+               "\nNome responsável: " + responsavel +
+               "\nEmpresa: " + empresa +
+               "\nQuantidade equipamentos alugados: " + qtdEquipamentos;
     }
+
+    public void addQtdEquipamentos() { this.qtdEquipamentos++; }
 }

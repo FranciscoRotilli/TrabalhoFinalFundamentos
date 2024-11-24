@@ -3,14 +3,17 @@ public class App {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         CadastroEquipa listaEquipa = new CadastroEquipa();
+        CadastroCliente listaCliente = new CadastroCliente();
+        CadastroEmprestimo listaEmprestimo = new CadastroEmprestimo();
         int opcao;
         String nomeEquipa, nomeCliente;
+        System.out.println("Olá, bem vindo ao sistema integrado da Less is More");
         do {
             menu();
-            System.out.println("Digite a opção desejada ");
             opcao = in.nextInt();
             switch (opcao) {
                 case 99:
+                    in.nextLine();
                     Equipamento a = new Equipamento("Vega Laser Ibramed Aparelho de Laser de Alta Potência para Depilação", "Laser para Depilação", 259.89);
                     listaEquipa.adicionaEquipa(a);
                     Equipamento b = new Equipamento("Alfamed Eletrocardiógrafo 12 Canais Ritmus 600", "Eletrocardiógrafo", 51.66);
@@ -23,54 +26,131 @@ public class App {
                     listaEquipa.adicionaEquipa(e);
                     Equipamento f = new Equipamento("Canfield Scientific HairMetrix", "Imagem", 86.19);
                     listaEquipa.adicionaEquipa(f);
+
+                    Cliente g = new Cliente("Francisco Coimbra Rotilli", "DermoClínica Clínica de Embelezamento");
+                    listaCliente.adicionaCliente(g);
+                    Cliente h = new Cliente("José Francisco Da Silva", "LipoDerma Clínica de Lipoaspiração");
+                    listaCliente.adicionaCliente(h);
+                    Cliente i = new Cliente("Filipe Pedrozo Lopes", "DepiLaser Clínica de depilação à laser");
+                    listaCliente.adicionaCliente(i);
+
                     System.out.println("Modo demo ativado!");
-                    break;
+                break;
+
+                case 1:
+                    in.nextLine();
+                    if (incluiCliente(listaCliente)) System.out.println("Cliente cadastrado com sucesso!");
+                    else System.out.println("Erro ao cadastrar cliente!");
+                break;
+
+                case 2:
+                    in.nextLine();
+                    mostrarClientes(listaCliente);
+                break;
+
                 case 3:
+                    in.nextLine();
                     System.out.println("Digite o nome do Cliente: ");
                     nomeCliente = in.nextLine();
-                    nomeCliente = in.nextLine();
+                    System.out.println(buscaClientePeloNomeDoResponsavel(listaCliente, nomeCliente));
+                break;
+
                 case 4:
+                    in.nextLine();
                     if (incluiEquipamento(listaEquipa)) System.out.println("Equipamento cadastrado com sucesso!");
                     else System.out.println("Erro ao cadastrar equipamento!");
                 break;
-                case 5: mostraEquipamentos(listaEquipa);
+
+                case 5:
+                    in.nextLine();
+                    mostrarEquipamentos(listaEquipa);
                 break;
+
                 case 6:
+                    in.nextLine();
                     System.out.println("Digite o nome do equipamento: ");
-                    nomeEquipa = in.nextLine();
                     nomeEquipa = in.nextLine();
                     System.out.println(pesquisarEquipamentoPorNome(listaEquipa, nomeEquipa));
                 break;
+
                 case 7:
-                    //retirarEquipamento(listaEquipa);
+                    in.nextLine();
+                    novoEmprestimo(listaEquipa, listaCliente, listaEmprestimo);
                 break;
+
                 case 8:
-                    //devolverEquipamento(listaEquipa);
+                    in.nextLine();
+                    devolverEmprestimo(listaEmprestimo);
                 break;
+
                 case 9:
-                    quantidadeTotalEquipamentos(listaEquipa);
+                    in.nextLine();
+                    quantidadeTotalEquipamentosDisponeiveis(listaEquipa);
                 break;
+
+                case 10:
+                    in.nextLine();
+                    mostrarEmprestimos(listaEmprestimo);
+                break;
+
+                case 11:
+                    in.nextLine();
+                    buscarEmprestimoEmpresa(listaEmprestimo);
+                break;
+
+                case 12: //todo
+                break;
+
+                case 13: //todo
+                break;
+                case 0: System.out.println("Saindo... Até mais!");
+                break;
+                default: System.out.println("Opção invalida.");
             }
-        } while (opcao != 11);
+        } while (opcao != 0);
     }
     public static void menu(){
+        System.out.println("Digite a opção desejada: ");
         System.out.println("99 – Modo demo (3 clientes e 6 equipamentos pré-cadastrados)");
         System.out.println("1 – Incluir Cliente");
-        System.out.println("2 – Mostrar clientes cadastrados");
-        System.out.println("3 – Pesquisar cliente por nome");
+        System.out.println("2 – Listar clientes cadastrados");
+        System.out.println("3 – Pesquisar cliente por nome do responsável");
         System.out.println("4 – Incluir equipamento");
-        System.out.println("5 – Mostrar equipamentos");
+        System.out.println("5 – Listar equipamentos");
         System.out.println("6 – Pesquisar equipamento por nome");
-        System.out.println("7 – Retirar equipamento");
-        System.out.println("8 – Devolver equipamento");
-        System.out.println("9 – Quantidade total de equipamentos disponíveis no sistema de empréstimo");
-        System.out.println("10 – Controle de caixa");
-        System.out.println("11 - Sair do programa");
+        System.out.println("7 – Novo Empréstimo");
+        System.out.println("8 – Devolver Empréstimo");
+        System.out.println("9 – Quantidade total de equipamentos disponíveis");
+        System.out.println("10 – Listar Empréstimos");
+        System.out.println("11 – Buscar Empréstimos por empresa cliente");
+        System.out.println("12 – Consultar saldo em caixa");
+        System.out.println("13 – Consultar saldo pendente");
+        System.out.println("0 - Sair do programa");
     }
-    public static void menuCaixa(){
-        System.out.println("1 – Consultar saldo em caixa");
-        System.out.println("2 – Consultar saldo pendente");
-        System.out.println("3 – Voltar para o menu principal");
+    public static boolean incluiCliente(CadastroCliente listaCliente) {
+        Scanner in = new Scanner(System.in);
+        String responsavel;
+        String empresa;
+        System.out.println("Digite o nome do responsável: ");
+        responsavel = in.nextLine();
+        System.out.println("Digite o nome da empresa: ");
+        empresa = in.nextLine();
+        if (listaCliente.buscaClientePelaEmpresa(empresa) == null) {
+            Cliente c = new Cliente(responsavel, empresa);
+            return listaCliente.adicionaCliente(c);
+        }
+        return false;
+    }
+    public static void mostrarClientes(CadastroCliente listaCliente) {
+        System.out.println("Clientes cadastrados: \n");
+        System.out.println(listaCliente.mostraClientes());
+    }
+    public static String buscaClientePeloNomeDoResponsavel(CadastroCliente listaCliente, String nome) {
+        Cliente c = listaCliente.buscaClientePeloResponsavel(nome);
+        if (c != null) {
+            return c.toString();
+        }
+        return "Cliente não encontrado";
     }
     public static boolean incluiEquipamento(CadastroEquipa listaEquipa) {
         Scanner in = new Scanner(System.in);
@@ -84,13 +164,13 @@ public class App {
         tipo = in.nextLine();
         System.out.println("Digite o valor do equipamento: ");
         valor = in.nextDouble();
+        in.nextLine();
         Equipamento e = new Equipamento(nome, tipo, valor);
         return listaEquipa.adicionaEquipa(e);
-
     }
-    public static void mostraEquipamentos(CadastroEquipa listaEquipa) {
+    public static void mostrarEquipamentos(CadastroEquipa listaEquipa) {
         System.out.println("Equipamentos cadastrados: \n");
-        System.out.println(listaEquipa.mostraEquipamentos());
+        System.out.println(listaEquipa.mostrarEquipamentos());
     }
     public static String pesquisarEquipamentoPorNome(CadastroEquipa listaEquipa, String nome) {
         Equipamento e = listaEquipa.buscaEquipaPeloNome(nome);
@@ -99,50 +179,91 @@ public class App {
         }
         return "Equipamento não encontrado";
     }
-//    public static void retirarEquipamento(CadastroEquipa listaEquipa) {
-//        Scanner in = new Scanner(System.in);
-//        String codigo;
-//        int opcao;
-//        String cliente;
-//        System.out.println("Digite o código do equipamento desejado: ");
-//        codigo = in.nextLine();
-//        Equipamento e = listaEquipa.buscaEquipaCodigo(codigo);
-//        if (e != null) {
-//            System.out.println("Equipamento encontrado!");
-//            System.out.println(e.toString());
-//            if (!e.getStatusAluguel()) {
-//                System.out.println("Deseja retirar o equipamento?");
-//                System.out.println("1 - Sim");
-//                System.out.println("2 - Nao");
-//                opcao = in.nextInt();
-//                if (opcao == 1) {
-//                    System.out.println("Digite o nome do cliente: ");
-//                    cliente = in.nextLine();
-//                    if (buscaClientePeloNome(cliente) != null) {
-//                        System.out.println("Cliente encontrado!");
-//                        if (e.retiraEquipamento()) System.out.println("Equipamento retirado com sucesso!");
-//                        else System.out.println("ERRO! Cliente já possui um equipamento desse tipo alugado.");
-//                    }
-//                } else if (opcao == 2) System.out.println("Retirada cancelada.");
-//                else System.out.println("ERRO! Opção inválida, tente novamente.");
-//            } else System.out.println("Equipamento alugado no momento, não é possível realizar retirada.");
-//        } else System.out.println("ERRO! Equipamento não encontrado.");
-//
-//    }
-//    public static void devolverEquipamento(CadastroEquipa listaEquipa) {
-//        Scanner in = new Scanner(System.in);
-//        String codigo;
-//        int opcao;
-//        System.out.println("Digite o código do equipamento a ser devolvido: ");
-//        codigo = in.next();
-//        Equipamento e = listaEquipa.buscaEquipaCodigo(codigo);
-//        if (e != null) {
-//            if (e.devolveEquipamento()) System.out.println("Equipamento devolvido com sucesso!");
-//            else System.out.println("ERRO! Equipamento não está alugado.");
-//        } else System.out.println("ERRO! Equipamento não encontrado.");
-//    }
-    public static void quantidadeTotalEquipamentos(CadastroEquipa listaEquipa) {
-        System.out.println("Existem " + listaEquipa.totalEquipamentos() + " equipamentos cadastrados.");
+    public static void novoEmprestimo(CadastroEquipa listaEquipa, CadastroCliente listaCliente, CadastroEmprestimo listaEmprestimo) {
+        Scanner in = new Scanner(System.in);
+        String codigo;
+        int opcao, horas;
+        boolean seguro = false;
+        String cliente;
+        System.out.println("Digite o código do equipamento desejado: ");
+        codigo = in.nextLine();
+        Equipamento e = listaEquipa.buscaEquipaCodigo(codigo);
+        if (e != null) {
+            System.out.println("Equipamento encontrado!");
+            System.out.println(e.toString());
+            if (!e.getStatusAluguel()) {
+                System.out.println("Deseja retirar o equipamento?");
+                System.out.println("1 - Sim");
+                System.out.println("2 - Nao");
+                opcao = in.nextInt();
+                in.nextLine();
+                if (opcao == 1) {
+                    System.out.println("Digite a matricula do cliente: ");
+                    cliente = in.next();
+                    Cliente c = listaCliente.buscaClientePelaMatricula(cliente);
+                    if (c != null) {
+                        System.out.println("Cliente encontrado!");
+                        System.out.println("Digite a quantidade de horas do empréstimo: ");
+                        horas = in.nextInt();
+                        in.nextLine();
+                        if (horas > 3) {
+                            System.out.println("Deseja contratar seguro? S/N");
+                            seguro = in.next().equals("S");
+                            in.nextLine();
+                            Emprestimo emp = new Emprestimo(e, c, horas, true);
+                            if (listaEmprestimo.registraEmprestimo(emp)) System.out.println("Equipamento retirado com sucesso!");
+                            else System.out.println("ERRO!");
+                        } else System.out.println("Erro! Mínimo de 3 horas de aluguel.");
+                    }
+                } else if (opcao == 2) System.out.println("Retirada cancelada.");
+                else System.out.println("ERRO! Opção inválida, tente novamente.");
+            } else System.out.println("Equipamento alugado no momento, não é possível realizar retirada.");
+        } else System.out.println("ERRO! Equipamento não encontrado.");
     }
-
+    public static void devolverEmprestimo(CadastroEmprestimo listaEmprestimo) {
+        Scanner in = new Scanner(System.in);
+        String codigo;
+        int opcao, horasAdicionais;
+        System.out.println("Digite o código do empréstimo: ");
+        codigo = in.next();
+        in.nextLine();
+        Emprestimo e = listaEmprestimo.buscaEmprestimoCodigo(codigo);
+        if (e != null) {
+            System.out.println(e.toString());
+            System.out.println("Empréstimo encontrado, deseja devolver? ");
+            System.out.println("1 - Sim");
+            System.out.println("2 - Nao");
+            opcao = in.nextInt();
+            in.nextLine();
+            if (opcao == 1) {
+                System.out.println("Digite a quantidade de horas adicionais: ");
+                horasAdicionais = in.nextInt();
+                in.nextLine();
+                if (listaEmprestimo.devolveEmprestimo(e, horasAdicionais)) System.out.println("Empréstimo devolvido com sucesso!");
+                else System.out.println("ERRO! Empréstimo já foi devolvido.");
+            } else if (opcao == 2) System.out.println("Devolução cancelada.");
+            else System.out.println("ERRO! Opção inválida, tente novamente.");
+        } else System.out.println("ERRO! Empréstimo não encontrado.");
+    }
+    public static void quantidadeTotalEquipamentosDisponeiveis(CadastroEquipa listaEquipa) {
+        System.out.println("Existem " + listaEquipa.totalEquipamentos() + " equipamentos cadastrados. " + listaEquipa.totalEquipamentosDisponiveis() + " estão disponíveis.");
+    }
+    public static void mostrarEmprestimos(CadastroEmprestimo listaEmprestimo) {
+        System.out.println("Empréstimos registrados: \n");
+        System.out.println(listaEmprestimo.mostrarEmprestimos());
+    }
+    public static void buscarEmprestimoEmpresa(CadastroEmprestimo listaEmprestimo) {
+        Scanner in = new Scanner(System.in);
+        String nome;
+        System.out.println("Digite o nome da empresa cliente: ");
+        nome = in.nextLine();
+        if (listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(nome)[0].getCliente().getEmpresa().equalsIgnoreCase(nome)) {
+            Emprestimo[] emp = listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(nome);
+            for (Emprestimo e : emp) {
+                if (e != null) {
+                    System.out.println(e.toString() + "\n\n");
+                }
+            }
+        } else System.out.println("Empresa não encontrada ou sem empréstimos registrados.");
+    }
 }

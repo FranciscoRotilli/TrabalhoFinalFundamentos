@@ -5,6 +5,8 @@ public class Equipamento {
     private String tipo;
     private double valor;
     private boolean statusAluguel;
+
+    //constructors
     public Equipamento() {
         codigo = "";
         nome = "";
@@ -51,12 +53,12 @@ public class Equipamento {
         this.statusAluguel = statusAluguel;
     }
 
-    //to string
+    //toSstring
     public String toString() {
         return  "Código: " + codigo +
                 "\nNome: " + nome +
                 "\nTipo: " + tipo +
-                "\nValor: " + valor +
+                "\nValor: R$" + valor + "/hora" +
                 "\nStatus de Aluguel: " + (statusAluguel ? "Alugado" : "Disponível");
     }
 }

@@ -1,7 +1,7 @@
-public class RegistroEmprestimo {
+public class CadastroEmprestimo {
     private Emprestimo[] lista;
     private int index;
-    public RegistroEmprestimo() {
+    public CadastroEmprestimo() {
         lista = new Emprestimo[100];
         index = 0;
     }
@@ -19,6 +19,7 @@ public class RegistroEmprestimo {
                 emp.setStatusEmprestimo(false);
                 emp.getEquipamento().setStatusAluguel(false);
                 emp.setQtdHoras(emp.getQtdHoras() + horasExtra);
+                emp.setValorFinal(horasExtra, emp.getEquipamento().getValor());
                 return true;
             }
         }
@@ -53,5 +54,12 @@ public class RegistroEmprestimo {
             if (codigo.equals(lista[i].getCodigoEmprestimo())) return lista[i];
         }
         return null;
+    }
+    public String mostrarEmprestimos() {
+        String resultado = "";
+        for (int i = 0; i < index; i++) {
+            resultado += lista[i].toString() + "\n";
+        }
+        return resultado;
     }
 }
