@@ -25,6 +25,13 @@ public class App {
             listaCliente.adicionaCliente(h);
             Cliente i = new Cliente("Filipe Pedrozo Lopes", "DepiLaser Clínica de depilação à laser");
             listaCliente.adicionaCliente(i);
+
+            Emprestimo j = new Emprestimo(f, g, 24, true);
+            listaEmprestimo.registraEmprestimo(j);
+            listaEmprestimo.devolveEmprestimo(j, 0);
+
+            Emprestimo k = new Emprestimo(d, h, 36, false);
+            listaEmprestimo.registraEmprestimo(k);
         }
         int opcao;
         String nomeEquipa, nomeCliente;
@@ -96,12 +103,12 @@ public class App {
 
                 case 12:
                     in.nextLine();
-                    System.out.println("Saldo disponível em caixa: R$" + consultarSaldoCaixa(listaEmprestimo));
+                    System.out.printf("\nSaldo disponível em caixa: R$%.2f\n", consultarSaldoCaixa(listaEmprestimo));
                 break;
 
                 case 13:
                     in.nextLine();
-                    System.out.println("Saldo pendente em empréstimos: R$" + consultarSaldoPendente(listaEmprestimo));
+                    System.out.printf("\nSaldo pendente em empréstimos: R$%.2f\n", consultarSaldoPendente(listaEmprestimo));
                 break;
                 case 0: System.out.println("Saindo... Até mais!");
                 break;
@@ -155,7 +162,6 @@ public class App {
         Scanner in = new Scanner(System.in);
         String nome;
         String tipo;
-        int quantidade;
         double valor;
         System.out.println("Digite o nome do equipamento: ");
         nome = in.nextLine();
@@ -181,7 +187,7 @@ public class App {
     public static void novoEmprestimo(CadastroEquipa listaEquipa, CadastroCliente listaCliente, CadastroEmprestimo listaEmprestimo) {
         Scanner in = new Scanner(System.in);
         String codigo;
-        int opcao, horas, opcaoS;
+        int opcao, horas;
         boolean seguro = false;
         String cliente;
         System.out.println("Digite o código do equipamento desejado: ");
@@ -189,7 +195,7 @@ public class App {
         Equipamento e = listaEquipa.buscaEquipaCodigo(codigo);
         if (e != null) {
             System.out.println("Equipamento encontrado!");
-            System.out.println(e.toString());
+            System.out.println(e);
             if (!e.getStatusAluguel()) {
                 System.out.println("Deseja retirar o equipamento?");
                 System.out.println("1 - Sim");
@@ -200,30 +206,30 @@ public class App {
                     System.out.println("Digite a matricula do cliente: ");
                     cliente = in.next();
                     Cliente c = listaCliente.buscaClientePelaMatricula(cliente);
-                    boolean jaPossui = false;
-                    for (int i = 0; i < listaEmprestimo.getIndex(); i++) {
-                        if (listaEmprestimo.getLista()[i].getCliente().equals(c)) {
-                            if (listaEmprestimo.getLista()[i].getEquipamento().getTipo().equals(e.getTipo())) System.out.println("O cliente já possui um equipamento desse tipo alugado");
-                            jaPossui = true;
-                            break;
-                        }
-                    }
-                    if (c != null && !jaPossui) {
+                    if (c != null) {
                         System.out.println("Cliente encontrado!");
-                        System.out.println("Digite a quantidade de horas do empréstimo: ");
-                        horas = in.nextInt();
-                        in.nextLine();
-                        if (horas > 3) {
-                            System.out.println("Deseja contratar seguro?");
-                            System.out.println("1 - Sim");
-                            System.out.println("2 - Nao");
-                            opcaoS = in.nextInt();
+                        boolean tipoJaAlugado = false;
+                        for (int i=0; i<listaEmprestimo.getIndex(); i++) {
+                            if (listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(c.getEmpresa())[i] != null &&
+                                    listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(c.getEmpresa())[i].getStatusEmprestimo() &&
+                                    listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(c.getEmpresa())[i].getEquipamento().getTipo().equalsIgnoreCase(e.getTipo())) {
+                                tipoJaAlugado = true;
+                                break;
+                            }
+                        }
+                        if (!tipoJaAlugado) {
+                            System.out.println("Digite a quantidade de horas do empréstimo: ");
+                            horas = in.nextInt();
                             in.nextLine();
-                            if (opcaoS == 1) seguro = true;
-                            Emprestimo emp = new Emprestimo(e, c, horas, true);
-                            if (listaEmprestimo.registraEmprestimo(emp)) System.out.println("Equipamento retirado com sucesso!");
-                            else System.out.println("ERRO!");
-                        } else System.out.println("Erro! Mínimo de 3 horas de aluguel.");
+                            if (horas > 3) {
+                                System.out.println("Deseja contratar seguro? S/N");
+                                seguro = in.next().equalsIgnoreCase("S");
+                                in.nextLine();
+                                Emprestimo emp = new Emprestimo(e, c, horas, seguro);
+                                if (listaEmprestimo.registraEmprestimo(emp)) System.out.println("Equipamento retirado com sucesso!");
+                                else System.out.println("ERRO!");
+                            } else System.out.println("Erro! Mínimo de 3 horas de aluguel.");
+                        } else System.out.println("Erro! O cliente já possui um equipamento deste tipo alugado.");
                     }
                 } else if (opcao == 2) System.out.println("Retirada cancelada.");
                 else System.out.println("ERRO! Opção inválida, tente novamente.");
@@ -239,7 +245,7 @@ public class App {
         in.nextLine();
         Emprestimo e = listaEmprestimo.buscaEmprestimoCodigo(codigo);
         if (e != null) {
-            System.out.println(e.toString());
+            System.out.println(e);
             System.out.println("Empréstimo encontrado, deseja devolver? ");
             System.out.println("1 - Sim");
             System.out.println("2 - Nao");
@@ -267,11 +273,11 @@ public class App {
         String nome;
         System.out.println("Digite o nome da empresa cliente: ");
         nome = in.nextLine();
-        if (listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(nome)[0].getCliente().getEmpresa().equalsIgnoreCase(nome)) {
+        if (listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(nome)[0] != null && listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(nome)[0].getCliente().getEmpresa().equalsIgnoreCase(nome)) {
             Emprestimo[] emp = listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(nome);
-            for (Emprestimo e : emp) {
-                if (e != null) {
-                    System.out.println(e.toString() + "\n\n");
+            for (int i = 0; i < listaEmprestimo.buscaEmprestimosPeloNomeEmpresa(nome).length; i++) {
+                if (emp[i] != null) {
+                    System.out.println(emp[i].toString() + "\n\n");
                 }
             }
         } else System.out.println("Empresa não encontrada ou sem empréstimos registrados.");

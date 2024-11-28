@@ -20,31 +20,20 @@ public class CadastroEmprestimo {
                 emp.getEquipamento().setStatusAluguel(false);
                 emp.setQtdHoras(emp.getQtdHoras() + horasExtra);
                 emp.setValorFinal(horasExtra, emp.getEquipamento().getValor());
+                emp.getCliente().removeQtdEquipamentos();
                 return true;
             }
         }
         return false;
     }
-    public Emprestimo[] buscaEmprestimosPeloNomeResponsavel(String nome) {
-        Emprestimo[] resultado;
-        resultado = new Emprestimo[lista.length];
-        int index = 0;
-        for (int i = 0; i < this.index; i++) {
-            if (lista[i].getCliente().getResponsavel().equals(nome)) {
-                resultado[index] = lista[i];
-                index++;
-            }
-        }
-        return resultado;
-    }
     public Emprestimo[] buscaEmprestimosPeloNomeEmpresa(String nome) {
         Emprestimo[] resultado;
         resultado = new Emprestimo[lista.length];
-        int index = 0;
+        int indexB = 0;
         for (int i = 0; i < this.index; i++) {
-            if (lista[i].getCliente().getEmpresa().equals(nome)) {
-                resultado[index] = lista[i];
-                index++;
+            if (lista[i].getCliente().getEmpresa().equalsIgnoreCase(nome)) {
+                resultado[indexB] = lista[i];
+                indexB++;
             }
         }
         return resultado;

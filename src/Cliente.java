@@ -14,7 +14,7 @@ public class Cliente {
         qtdEquipamentos = 0;
     }
     public Cliente(String responsavel, String empresa) {
-        this.matricula = UUID.randomUUID().toString().substring(32, 36);
+        this.matricula = UUID.randomUUID().toString().substring(28, 36);
         if (responsavel != null) this.responsavel = responsavel;
         if (empresa != null) this.empresa = empresa;
         qtdEquipamentos = 0;
@@ -55,4 +55,5 @@ public class Cliente {
     }
 
     public void addQtdEquipamentos() { this.qtdEquipamentos++; }
+    public void removeQtdEquipamentos() { this.qtdEquipamentos--; }
 }

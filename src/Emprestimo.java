@@ -74,14 +74,16 @@ public class Emprestimo {
 
     //toString
     public String toString() {
+        String valorInicialStr = String.format("%.2f", valorInicial);
+        String valorFinalStr = String.format("%.2f", valorFinal);
         return "Código Empréstimo: " + codigoEmprestimo +
                "\nEquipamento-> Nome: " + equipamento.getNome() + " Código: " + equipamento.getCodigo() +
                "\nCliente-> Empresa: " + cliente.getEmpresa() + " Responsável: " + cliente.getResponsavel() +
                "\nStatus empréstimo: " + (ativo ? "Ativo" : "Devolvido") +
-               "\nSeguro: " + (seguro ? "Sim" : "Nao") +
+               "\nSeguro: " + (seguro ? "Sim" : "Não") +
                "\nQtdHoras: " + qtdHoras +
-               "\nValor Inicial: R$" + valorInicial +
-               "\nValor Final: R$" + valorFinal;
+               "\nValor Inicial: R$" + valorInicialStr +
+               "\nValor Final: R$" + valorFinalStr;
 
     }
 }

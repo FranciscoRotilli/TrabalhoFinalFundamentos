@@ -15,7 +15,7 @@ public class Equipamento {
         statusAluguel = false;
     }
     public Equipamento(String nome, String tipo, double valor) {
-        this.codigo = UUID.randomUUID().toString().substring(32, 36);
+        this.codigo = UUID.randomUUID().toString().substring(30, 36);
         if (nome != null && !nome.isEmpty()) this.nome = nome;
         if (tipo != null && !tipo.isEmpty()) this.tipo = tipo;
         if (valor > 0) this.valor = valor;
