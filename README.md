@@ -1,3 +1,5 @@
+### Trabalho avaliado com grau 10,0/10,0 ###
+
 ## PONTIFÍCIA UNIVERSIDADE CATÓLICA DO RIO GRANDE DO SUL
 
 ## Escola Politécnica - Computação- 2024/2
